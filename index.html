@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#213c3b" />
+    <link rel="icon" href="data:," />
+    <title>Solaris / Solar water heater</title>
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <span>☀</span> SOLARIS <small>SOLAR WATER HEATER</small>
+      </div>
+      <div class="header-actions">
+        <span class="local">OFFLINE LAB / 03</span
+        ><button id="guideButton">How it works ↗</button>
+      </div>
+    </header>
+    <main>
+      <section class="workspace">
+        <div class="stage" id="stage">
+          <div id="startupStatus" role="status">
+            Starting the solar water heater…
+          </div>
+          <div
+            id="viewport"
+            tabindex="0"
+            aria-label="Solar water heater. Drag to orbit. Scroll or pinch to zoom."
+          ></div>
+          <div class="stage-top">
+            <span class="badge"
+              ><i></i><span id="status">COLLECTING SUNLIGHT</span></span
+            ><span class="stage-caption">ACTIVE DIRECT CIRCULATION</span>
+          </div>
+          <div class="headline">
+            <span class="eyebrow">SUNLIGHT INTO HOT WATER</span>
+            <h1>Follow the heat.</h1>
+          </div>
+          <div class="tools">
+            <button id="labelsButton" class="active" aria-pressed="true">
+              Labels</button
+            ><button id="tourButton" aria-pressed="false">Orbit</button
+            ><button id="resetView" aria-label="Reset camera">↺</button>
+          </div>
+          <div id="labels"></div>
+          <div class="temperature-key">
+            <span>25 °C</span><i></i><span>85 °C</span
+            ><small>WATER TEMPERATURE</small>
+          </div>
+          <div class="stage-bottom">
+            <div class="views">
+              <button data-view="assembled">Assembled</button
+              ><button data-view="cutaway" class="active">Cutaway</button
+              ><button data-view="exploded">Exploded ↗</button>
+            </div>
+            <span id="orbitHint">DRAG TO ORBIT · SCROLL TO ZOOM</span>
+          </div>
+        </div>
+        <div class="part-info">
+          <span id="partNumber">01</span>
+          <div>
+            <h2 id="partTitle">Flat-plate collector</h2>
+            <p id="partDescription">
+              Sunlight passes through the glazing. The coated absorber heats the
+              water in the bonded copper riser tubes.
+            </p>
+          </div>
+          <button
+            id="exportButton"
+            title="Download the current readings as a CSV file"
+          >
+            Save reading ↓
+          </button>
+        </div>
+      </section>
+      <aside>
+        <div class="console-title">
+          <h2>Experiment controls</h2>
+          <span>LIVE</span>
+        </div>
+        <div class="tank-card">
+          <span>STORAGE TANK · UPPER LAYER</span>
+          <div>
+            <strong id="topTemperature">25.0</strong><b>°C</b
+            ><svg viewBox="0 0 28 52" aria-hidden="true">
+              <path d="M9 33V9a5 5 0 0 1 10 0v24a10 10 0 1 1-10 0" />
+              <path class="mercury" d="M14 16v23" />
+              <circle class="mercury" cx="14" cy="41" r="4" />
+            </svg>
+          </div>
+          <p>
+            <span>Lower layer <b id="bottomTemperature">25.0 °C</b></span
+            ><span>80 L storage</span>
+          </p>
+        </div>
+        <div class="mini-metrics">
+          <div>
+            <label>COLLECTOR PLATE</label
+            ><strong id="plateTemperature">32.0</strong><small>°C</small>
+          </div>
+          <div>
+            <label>HEAT TO WATER</label><strong id="waterPower">—</strong
+            ><small>W</small>
+          </div>
+        </div>
+        <div class="control">
+          <label for="radiation"
+            ><span><b>01</b> Solar radiation</span
+            ><output id="radiationValue">800 W/m²</output></label
+          ><input
+            id="radiation"
+            type="range"
+            min="0"
+            max="1100"
+            step="25"
+            value="800"
+          />
+        </div>
+        <div class="control">
+          <label for="flow"
+            ><span><b>02</b> Water flow rate</span
+            ><output id="flowValue">1.5 L/min</output></label
+          ><input
+            id="flow"
+            type="range"
+            min="0"
+            max="5"
+            step=".1"
+            value="1.5"
+          />
+        </div>
+        <div class="control">
+          <label for="material"
+            ><span><b>03</b> Absorber metal</span
+            ><output id="conductivity">k = 385</output></label
+          ><select id="material">
+            <option value="copper">Copper</option>
+            <option value="aluminum">Aluminum</option>
+            <option value="steel">Steel</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="coating"
+            ><span class="coating-label">Surface coating / color</span></label
+          ><select id="coating">
+            <option value="chrome">Black chrome · selective</option>
+            <option value="black">Matte black · painted</option>
+            <option value="bare">Bare metal · uncoated</option>
+          </select>
+        </div>
+        <div class="coating-info">
+          <span>Absorptance <b id="alpha">0.95</b></span
+          ><span>Emittance <b id="epsilon">0.10</b></span>
+        </div>
+        <div class="actions">
+          <button id="pauseButton" aria-pressed="false">Ⅱ Pause</button
+          ><button id="resetButton">Reset experiment</button>
+        </div>
+        <div class="time-control">
+          <label for="speed">TIME SCALE</label
+          ><select id="speed">
+            <option value="1">Real time · 1×</option>
+            <option value="30" selected>30× faster</option>
+            <option value="60">60× faster</option></select
+          ><span id="elapsed">00:00</span>
+        </div>
+        <p class="model-note">
+          Educational model · temperatures are estimates.<br />Glazing and
+          covers separate for inspection only.
+        </p>
+      </aside>
+    </main>
+    <nav class="cycle-strip" aria-label="Heat transfer components">
+      <button class="selected" data-part="collector">
+        <span>01</span>
+        <div>
+          <b>Solar collector</b
+          ><strong id="absorbed">— <small>W absorbed</small></strong>
+        </div></button
+      ><button data-part="pipes">
+        <span>02</span>
+        <div>
+          <b>Water circulation</b
+          ><strong id="outlet">— <small>°C return</small></strong>
+        </div></button
+      ><button data-part="pump">
+        <span>03</span>
+        <div>
+          <b>Circulation pump</b
+          ><strong id="actualFlow">1.5 <small>L/min</small></strong>
+        </div></button
+      ><button data-part="tank">
+        <span>04</span>
+        <div>
+          <b>Insulated storage</b
+          ><strong id="stored">0.000 <small>kWh stored</small></strong>
+        </div>
+      </button>
+    </nav>
+    <dialog id="guide">
+      <button id="closeGuide" class="close">Close ×</button
+      ><span class="eyebrow">SOLARIS / FIELD NOTES</span>
+      <h2>Sunlight → absorber → water → storage.</h2>
+      <p>
+        This is an active, pumped direct-circulation solar water heater. Water
+        from the lower tank flows through the collector's parallel riser tubes
+        and returns near the top. The tank is represented by two mixed layers to
+        show thermal stratification.
+      </p>
+      <h3>The three experiment controls</h3>
+      <p>
+        <b>1. Solar radiation:</b> sets incident power per square metre. At zero
+        radiation, the collector and tank can lose heat to their
+        surroundings.<br /><b>2. Water flow:</b> changes heat transfer and
+        outlet temperature. Faster flow can transfer more heat while producing a
+        smaller temperature rise on each pass. At zero flow, circulation stops
+        but the absorber can still heat up.<br /><b
+          >3. Absorber material and surface:</b
+        >
+        metal conductivity changes fin efficiency; coating changes solar
+        absorptance and thermal emittance. Black chrome and matte black have the
+        same assumed absorptance but different emittance, so their heat
+        retention differs.
+      </p>
+      <h3>Explore the model</h3>
+      <p>
+        Drag to orbit; scroll or pinch to zoom. Select the component cards or 3D
+        labels to focus. Cutaway removes the glazing and front tank shell.
+        Exploded separates glass, absorber sheet and tank cover. Water-flow
+        arrows and colors are visual aids; real water does not change from blue
+        to red. The glass remains thermally present in all views. An idle orbit
+        begins after 12 seconds. Turn Orbit off to disable it. Pause stops both
+        thermal time and animation. Reset restores the experiment. Save reading
+        downloads a CSV snapshot.
+      </p>
+      <h3>Model and equations</h3>
+      <p>
+        Collector area A = 2 m²; glass transmittance τ = 0.90; ambient
+        temperature Ta = 25 °C; tank = 80 kg of water in two 40 kg layers; cp =
+        4180 J/(kg·K). The collector envelope represents about 1.25 × 1.6 m.
+        Other dimensions and pipe routing are illustrative.
+      </p>
+      <p>
+        Qabsorbed = G A τ α<br />Qloss = A[3(Tplate − Ta) + εσ(Tplate,K⁴ −
+        Ta,K⁴)]<br />Fin efficiency ηf = tanh(mL)/(mL), m = √[2h/(kt)], h = 12
+        W/(m²·K), t = 0.5 mm, L = 45 mm<br />UA = 180ηf W/K; effectiveness = 1 −
+        exp[−UA/(ṁcp)]<br />Qwater = ṁcp · effectiveness · (Tplate − Tbottom)<br />Ccollector
+        dTplate/dt = Qabsorbed − Qloss − Qwater, Ccollector = 18,000 J/K<br />Tank
+        energy changes by Qwater minus tank heat loss. Each layer has 1.2 W/K
+        loss conductance; layer mixing uses 5 W/K, or 60 W/K during temperature
+        inversion.
+      </p>
+      <p>
+        Metal conductivity k: copper 385, aluminum 205, steel 50 W/(m·K).
+        Representative coating constants (α, ε): black chrome (0.95, 0.10),
+        matte black (0.95, 0.90), bare metal (0.35, 0.15). These classroom
+        constants are not measured product specifications. No boiling, weather,
+        draw-off, freeze protection or pump electricity is modeled. The
+        simulation stops at the liquid-water model limit; it does not model
+        vapor. Tank storage energy is relative to its initial 25 °C temperature.
+      </p>
+      <p>
+        Normal time is accelerated by 30×; select 1× for real time. Thermal
+        integration uses small time steps. The pipe markers are intentionally
+        slowed to make flow direction visible. Circulation is manually
+        controlled; an actual installation would normally use a
+        differential-temperature controller.
+      </p>
+      <p>
+        References:
+        <a
+          href="https://www.energystar.gov/products/solar_water_heaters/how-it-works"
+          target="_blank"
+          rel="noopener"
+          >ENERGY STAR: solar water heaters</a
+        >
+        ·
+        <a
+          href="https://www.eia.gov/energyexplained/solar/solar-thermal-collectors.php"
+          target="_blank"
+          rel="noopener"
+          >EIA: solar thermal collectors</a
+        >
+        ·
+        <a
+          href="https://www.pnnl.gov/projects/om-best-practices/solar-water-heating-systems"
+          target="_blank"
+          rel="noopener"
+          >PNNL: solar water heating</a
+        >. Reference links require internet; this simulator does not. Three.js
+        r160.1 is included under its MIT license.
+      </p>
+    </dialog>
+    <noscript
+      ><div class="startup-error">
+        Enable JavaScript to run this simulator.
+      </div></noscript
+    >
+    <script src="src/errors.js"></script>
+    <script src="vendor/three.min.js"></script>
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
