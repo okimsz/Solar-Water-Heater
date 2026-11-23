@@ -393,9 +393,9 @@ export function createWorld(onSelect) {
     b.rotation.z = a;
   }
   sun.traverse(object=>{object.castShadow=false;});
-  label("01 / SOLAR COLLECTOR", collector, [0, 1.8, 0.1], "collector");
+  label("☀ COLLECTOR · ADJUST", collector, [0, 1.8, 0.1], "collector");
   label("04 / STORAGE TANK", tank, [0, 1.75, 0], "tank");
-  label("03 / PUMP", pump, [0, -0.38, 0.15], "pump");
+  label("◉ PUMP · ADJUST FLOW", pump, [0, -0.38, 0.15], "pump");
   label("WARM WATER RETURN", circuit, [0.6, 3.07, -0.6], "pipes");
   return {
     host,

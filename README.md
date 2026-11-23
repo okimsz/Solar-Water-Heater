@@ -75,6 +75,12 @@ by Git; regenerate it after cloning or changing source code.
 
 ## Experiment
 
+- Click the collector or its floating label to open sunlight, metal and coating
+  controls inside the 3D viewport. Click the pump or pipes for water flow controls.
+- Click the tank to inspect its temperatures and model limits. Close the panel
+  with its × button or Escape. Idle orbit waits while a control panel is open.
+- Try the three guided challenges beside the live readings. Progress responds
+  to actual simulated temperatures and settings. Reset clears challenge progress.
 - Increase solar radiation to increase absorbed power.
 - Adjust flow to compare heat delivery with return-water temperature.
 - Set flow to zero to see stagnant collector heating; tank heat delivery stops.

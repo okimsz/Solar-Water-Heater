@@ -10,10 +10,12 @@ import {
   step,
 } from "./physics.js";
 import { createWorld } from "./scene.js";
+import { createExperience } from "./experience.js";
 const $ = (id) => document.getElementById(id),
   world = createWorld(selectPart);
 const { host, scene, camera, renderer } = world;
 const defaults = { ...state };
+const experience = createExperience(activity);
 let selected = "collector";
 const descriptions = {
   collector: [
@@ -87,6 +89,7 @@ function setView(view) {
 }
 function selectPart(id) {
   activity();
+  experience.open(id);
   selected = id;
   const d = descriptions[id];
   $("partNumber").textContent = d[0];
@@ -216,7 +219,7 @@ function frame(now) {
     end.toArray(world.rayPositions, i * 6 + 3);
   });
   world.sunRays.geometry.attributes.position.needsUpdate = true;
-  if (state.autoIdle && !state.tour && now - state.lastInput > 12000) {
+  if (state.autoIdle && !state.tour && !experience.isOpen() && now - state.lastInput > 12000) {
     state.tour = true;
     home(false);
     syncTour();
@@ -260,6 +263,7 @@ function frame(now) {
   if (now - lastUI > 150) {
     lastUI = now;
     updateUI(data);
+    experience.update();
   }
   window.SIM.telemetry = data;
   requestAnimationFrame(frame);
@@ -358,6 +362,7 @@ $("pauseButton").onclick = () => {
   paintControls();
 };
 $("resetButton").onclick = () => {
+  experience.reset();
   Object.assign(state, defaults);
   state.limitReached = false;
   activity();

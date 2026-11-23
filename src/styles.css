@@ -7,6 +7,38 @@
   --green: #426a5d;
   --blue: #4998b0;
 }
+[hidden] { display: none !important; }
+.machine-controls {
+  position: absolute;
+  z-index: 8;
+  right: 16px;
+  top: 112px;
+  width: min(290px, calc(100% - 32px));
+  max-height: calc(100% - 184px);
+  overflow-y: auto;
+  padding: 16px;
+  border: 1px solid #8aa496;
+  border-radius: 14px;
+  background: #fcfff8f5;
+  box-shadow: 0 12px 36px #213c3b30;
+}
+.machine-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.machine-heading strong { font-size: 16px; }
+.machine-heading button { padding: 3px 10px; font-size: 22px; }
+.machine-hint, .tank-explanation { font-size: 14px; line-height: 1.5; }
+.machine-controls .control { margin-bottom: 18px; }
+.machine-controls .control label, .machine-controls .control select { font-size: 14px; }
+.machine-controls input[type=range] { min-height: 24px; }
+.experiment-card { border: 1px solid #c1d2b4; background: #e6eddb; border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+.experiment-card h3 { margin: 8px 0; font-size: 16px; }
+.experiment-card p { font-size: 14px; line-height: 1.5; margin: 8px 0; }
+.experiment-card progress { width: 100%; height: 10px; accent-color: #517944; }
+.experiment-result { font-size: 13px; line-height: 1.5; margin: 8px 0; }
+.experiment-result:empty { display: none; }
+.experiment-card button { width: 100%; background: #274d41; color: #fff; font-size: 14px; }
+@media (max-width: 899px) {
+  .machine-controls { top: 170px; max-height: 295px; }
+}
 * {
   box-sizing: border-box;
 }
