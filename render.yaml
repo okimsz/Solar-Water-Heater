@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: solar-water-heater
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    autoDeployTrigger: off

@@ -11,6 +11,26 @@ A separate interactive 3D simulator matching the proposal's three controls:
 solar radiation, water flow, and absorber metal/surface coating. Uses a pumped,
 direct-circulation flat-plate collector and an approximately 80 L storage tank.
 
+## Deploy to Render
+
+[Deploy to Render](https://render.com/deploy?repo=https://github.com/okimsz/Solar-Water-Heater)
+
+Sign in to Render, open the link above, review the static site, and deploy.
+The repository's `render.yaml` supplies the build and publish settings.
+Automatic deploys are off; use Manual Deploy in Render to publish future changes.
+
+For manual setup, choose **New > Static Site** and connect this repository:
+
+- Branch: `main`
+- Root Directory: leave blank
+- Build Command: `npm run build`
+- Publish Directory: `dist`
+- Environment variables: none required
+
+The build creates `dist/index.html` for the homepage and retains
+`dist/solar-water-heater.html` as the downloadable offline version.
+Render serves these files directly; no start command is needed.
+
 ## Run in VS Code
 
 Open this folder, install Node.js 20+ if needed, then:
